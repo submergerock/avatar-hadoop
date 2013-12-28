@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<!-- Put site-specific property overrides in this file. -->
+
+
+<!-- special parameters for avatarnode -->
+<configuration>
+<property>
+  <name>dfs.permissions</name>
+  <value>false</value>
+</property>
+
+<property>
+	<name>dfs.name.dir.shared0</name>
+	<value>/usr/local/hadoop/avatarshare/share0/namenode</value>
+</property> 
+<property>
+	<name>dfs.name.edits.dir.shared0</name>
+	<value>/usr/local/hadoop/avatarshare/share0/editlog</value>
+</property>
+<property>
+	<name>dfs.http.address0</name>
+	<value>avatarnode0:50070</value>
+</property> 
+
+<property>
+	<name>dfs.name.dir.shared1</name>
+	<value>/usr/local/hadoop/avatarshare/share1/namenode</value>
+</property> 
+<property>
+	<name>dfs.name.edits.dir.shared1</name>
+	<value>/usr/local/hadoop/avatarshare/share1/editlog</value>
+</property>
+<property>
+	<name>dfs.http.address1</name>
+	<value>avatarnode1:50070</value>
+</property> 
+
+<!-- special parameters for avatarnode -->
+
+
+<property>
+	<name>dfs.http.address</name>
+	<value>avatarnode0:50070</value>
+</property> 
+
+<property>
+	<name>dfs.replication</name>
+	<value>2</value>
+</property>
+
+<property>
+	<name>dfs.replication.min</name>
+	<value>1</value>                                                                                                         
+</property>
+
+<property>
+	<name>dfs.datanode.max.xcievers</name>
+	<value>4096</value>
+</property>
+
+<property>
+	<name>dfs.name.dir</name>
+	<value>/usr/local/hadoop/local/namenode</value>
+</property>
+<property>
+	<name>dfs.name.edits.dir</name>
+	<value>/usr/local/hadoop/local/editlog</value>
+</property> 
+
+<property>
+	<name>fs.checkpoint.dir</name>
+	<value>/usr/local/hadoop/secondarynode</value>
+</property>
+
+<property>
+	<name>dfs.data.dir</name>
+	<value>/usr/local/hadoop/block</value>
+</property>
+
+<property>
+	<name>dfs.namenode.logging.level</name>
+	<value>info</value>
+</property>
+
+<property>
+	<name>dfs.datanode.handler.count</name>
+	<value>16</value>
+</property>
+
+<property>
+	<name>dfs.namenode.handler.count</name>
+	<value>16</value>
+</property>
+
+<property>
+	<name>dfs.block.size</name>
+	<value>134217728</value>
+</property>
+
+<property>
+	<name>dfs.balance.bandwidthPerSec</name>
+	<value>1048576</value>
+</property>
+
+<property>
+	<name>dfs.support.append</name>
+	<value>true</value>
+</property>
+
+<property>
+	<name>dfs.hosts.exclude</name>
+	<value>/usr/local/hadoop/hadoop_suite_linux/software/hadoop/conf/decommission</value>
+</property> 
+
+<property>
+	<name>dfs.datanode.du.reserved</name>
+	<value>16106127360</value>
+</property>
+
+</configuration>

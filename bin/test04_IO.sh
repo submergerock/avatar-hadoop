@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+if [ $# -le 3 ]; then
+  echo "test04_IO.sh  <sum of files> <filesize(B)>  <second> [read|write]"
+  exit 1
+fi
+echo
+
+  sumoffiles=$1
+  filesize=$2
+  second=$3
+  read=""
+  write=""
+if [ $# -eq 4 ] ; then
+  read=`echo $@|grep -ri  "read"`
+  write=`echo $@|grep -ri  "write"`
+
+fi
+
+echo read = $read
+echo write = $write
+
+if [ -z "$read" -a -z "$write" ] ; then
+  read="read"
+  write="write"
+elif [ -n "$read" -a -z "$write" ] ; then
+   read="read"
+  write=""
+elif [ -z "$read" -a -n "$write" ] ; then
+   read=""
+  write="write"
+else
+   echo
+fi
+
+echo read = $read
+echo write = $write
+
+echo sumoffiles = $sumoffiles
+echo filesize = $filesize
+
+echo HADOOP_HOME = $HADOOP_HOME
+echo
+
+
+nu=1
+
+#echo "111" >> /tmp/test04lock
+if [ -n "$write" ] ; then
+
+#while [ $nu -gt 0 ]
+#        do
+echo ============writing file to hdfs on 192.168.1.14=================
+  ssh 192.168.1.14  nohup /usr/local/hadoop-0.20.1-dev/bin/write_to_hdfs.sh $sumoffiles $filesize $second &
+echo ============writing file to hdfs on 192.168.1.19=================
+  ssh 192.168.1.19  nohup /usr/local/hadoop-0.20.1-dev/bin/write_to_hdfs.sh $sumoffiles $filesize $second &
+echo ============writing file to hdfs on 192.168.1.20=================
+  ssh 192.168.1.20  nohup /usr/local/hadoop-0.20.1-dev/bin/write_to_hdfs.sh $sumoffiles $filesize $second &
+
+
+#lockfile=$(ls /tmp/test04lock  | awk '{print $1}')
+#echo lockfile = $lockfile
+#if  [ -z "$lockfile" ] ; then 
+#  break  
+#else
+# echo sleeping
+# sleep 120
+#fi
+#done
+
+fi
+
+
+sleep  2
+if [ -n "$read" ] ; then
+
+echo =========192.168.1.13 reading file of 192.168.1.14  to hdfs on ==========
+  ssh 192.168.1.13 nohup /usr/local/hadoop-0.20.1-dev/bin/read_from_hdfs_IP.sh 192.168.1.14 &
+
+echo =========192.168.1.13 reading file of 192.168.1.19  to hdfs on ==========
+  ssh 192.168.1.13 nohup /usr/local/hadoop-0.20.1-dev/bin/read_from_hdfs_IP.sh 192.168.1.19 &
+
+echo =========192.168.1.13 reading file of 192.168.1.20  to hdfs on ==========
+  ssh 192.168.1.13 nohup /usr/local/hadoop-0.20.1-dev/bin/read_from_hdfs_IP.sh 192.168.1.20 &
+
+fi

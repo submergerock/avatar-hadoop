@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+<property>
+<name>mapred.job.tracker</name>
+<value>172.16.40.234:9003</value>
+</property>
+
+<property>
+  <name>mapred.tasktracker.map.tasks.maximum</name>
+  <value>2</value>
+  <description>The maximum number of map tasks that will be run
+  simultaneously by a task tracker.
+  </description>
+</property>
+
+<property>
+  <name>mapred.tasktracker.reduce.tasks.maximum</name>
+  <value>2</value>
+  <description>The maximum number of reduce tasks that will be run
+  simultaneously by a task tracker.
+  </description>
+</property>
+
+<property>
+  <name>mapred.child.java.opts</name>
+  <value></value>
+</property>
+
+<property>
+  <name>mapred.child.ulimit</name>
+  <!--<value>524288000</value>-->
+  <!--<value>4096000</value>-->
+  <value>2048000</value>
+  <description>The maximum virtual memory, in KB, of a process launched by the
+  Map-Reduce framework. This can be used to control both the Mapper/Reducer
+  tasks and applications using Hadoop Pipes, Hadoop Streaming etc.
+  By default it is left unspecified to let cluster admins control it via
+  limits.conf and other such relevant mechanisms.
+  Note: mapred.child.ulimit must be greater than or equal to the -Xmx passed to
+  JavaVM, else the VM might not start.
+  </description>
+</property>
+
+<property>
+  <name>ipc.client.connect.max.retries</name>
+  <value>20</value>
+</property>
+
+<property>
+  <name>io.sort.mb</name>
+    <value>500</value>
+     <!--<value>1800</value>-->
+      <description></description>
+</property>
+
+<property>
+  <name>mapred.reduce.parallel.copies</name>
+    <value>2</value>
+      <description> </description>
+</property>
+
+<property>
+  <name>mapred.job.reuse.jvm.num.tasks</name>
+    <value>1</value>
+      <description></description>
+     </property>
+
+<property>
+  <name>mapred.compress.map.output</name>
+  <value>true</value>
+  <description></description>
+</property>
+
+<property>
+  <name>mapred.reduce.slowstart.completed.maps</name>
+     <!--<value>0.4</value>-->
+     <value>0.99</value>
+     <description></description>
+</property>
+
+<property>
+  <name>mapred.submit.replication</name>
+  <value>3</value>
+</property>
+
+
+<property>
+  <name>map.mustlocal</name>
+  <value>true</value>
+</property>
+    
+</configuration>
+

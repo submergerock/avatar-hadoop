@@ -1,0 +1,143 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<!-- Put site-specific property overrides in this file. -->
+
+
+<!-- special parameters for avatarnode -->
+<configuration>
+<property>
+  <name>dfs.permissions</name>
+  <value>false</value>
+</property>
+<property>
+	<name>dfs.name.dir.shared0</name>
+	<value>/usr/local/hadoop/avatarshare/share0/namenode</value>
+</property> 
+<property>
+	<name>dfs.name.edits.dir.shared0</name>
+	<value>/usr/local/hadoop/avatarshare/share0/editlog</value>
+</property> 
+<property>
+	<name>dfs.http.address0</name>
+	<value>avatarnode0:50070</value>
+</property> 
+
+<property>
+	<name>dfs.name.dir.shared1</name>
+	<value>/usr/local/hadoop/avatarshare/share1/namenode</value>
+</property> 
+<property>
+	<name>dfs.name.edits.dir.shared1</name>
+	<value>/usr/local/hadoop/avatarshare/share1/editlog</value>
+</property> 
+<property>
+	<name>dfs.http.address1</name>
+	<value>avatarnode1:50070</value>
+</property> 
+<property>
+  <name>dfs.block.size</name>
+  <value>1048576</value>
+  <description>The default block size for new files.</description>
+</property>
+
+<!-- special parameters for avatarnode -->
+
+
+<property>
+	<name>dfs.http.address</name>
+	<value>avatarnode0:50070</value>
+</property> 
+
+<property>
+	<name>dfs.replication</name>
+	<value>2</value>
+</property>
+
+<property>
+	<name>dfs.replication.min</name>
+	<value>1</value>                                                                                                         
+</property>
+
+<property>
+	<name>dfs.datanode.max.xcievers</name>
+	<value>4096</value>
+</property>
+
+<property>
+	<name>dfs.name.dir</name>
+	<value>/usr/local/hadoop/local/namenode</value>
+</property>
+<property>
+	<name>dfs.name.edits.dir</name>
+	<value>/usr/local/hadoop/local/editlog</value>
+</property> 
+
+<property>
+	<name>fs.checkpoint.dir</name>
+	<value>/usr/local/hadoop/secondarynode</value>
+</property>
+
+<property>
+	<name>dfs.data.dir</name>
+	<value>/usr/local/hadoop/block</value>
+</property>
+
+<property>
+	<name>dfs.namenode.logging.level</name>
+	<value>info</value>
+</property>
+
+<property>
+	<name>dfs.datanode.handler.count</name>
+	<value>16</value>
+</property>
+
+<property>
+	<name>dfs.namenode.handler.count</name>
+	<value>16</value>
+</property>
+<!-- special parameters for raid -->
+<property>
+	<name>raid.config.file</name>
+	<value>conf/raid.xml</value>
+</property>
+<property>
+         <name>fs.hdfs.impl</name>
+         <value>org.apache.hadoop.hdfs.DistributedRaidFileSystem</value>
+         <description>The FileSystem for hdfs: uris.</description>
+</property>
+<property>
+          <name>hdfs.raid.locations</name>
+          <value>hdfs://192.168.1.9:9000/raid</value>
+          <description>The location for parity files. If this is
+          is not defined, then defaults to /raid. 
+          </description>
+</property>
+<property>
+          <name>hdfs.raid.stripeLength</name>
+          <value>10</value>
+          <description>The number of blocks in a file to be combined into 
+          a single raid parity block. The default value is 5. The lower
+          the number the greater is the disk space you will save when you
+          enable raid.
+          </description>
+</property>
+<property>
+          <name>fs.raidnode.local</name>
+          <value>true</value>
+          <description>If you do not want to use your map-reduce cluster to
+          raid files in parallel, then specify "true". By default, this
+          value is false, which means that the RaidNode uses the default
+          map-reduce cluster to generate parity blocks.
+          </description>
+</property>
+<property>
+          <name>raid.policy.rescan.interval</name>
+          <value>5000</value>
+          <description>Specify the periodicity in milliseconds after which
+          all source paths are rescanned and parity blocks recomputed if 
+          necessary. By default, this value is 1 hour.
+          </description>
+</property>
+</configuration>

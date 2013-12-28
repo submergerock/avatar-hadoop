@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<!-- Put site-specific property overrides in this file. -->
+
+
+<!-- special parameters for avatarnode -->
+<configuration>
+<property>
+  <name>dfs.permissions</name>
+  <value>false</value>
+</property>
+<property>
+	<name>dfs.name.dir.shared0</name>
+	<value>/home/wl826214/hadoop/avatarshare/share0/namenode</value>
+</property> 
+<property>
+	<name>dfs.name.edits.dir.shared0</name>
+	<value>/home/wl826214/hadoop/avatarshare/share0/editlog</value>
+</property> 
+<property>
+	<name>dfs.http.address0</name>
+	<value>avatarnode0:50070</value>
+</property> 
+
+<property>
+	<name>dfs.name.dir.shared1</name>
+	<value>/home/wl826214/hadoop/avatarshare/share1/namenode</value>
+</property> 
+<property>
+	<name>dfs.name.edits.dir.shared1</name>
+	<value>/home/wl826214/hadoop/avatarshare/share1/editlog</value>
+</property> 
+<property>
+	<name>dfs.http.address1</name>
+	<value>avatarnode1:50070</value>
+</property> 
+
+<!-- special parameters for avatarnode -->
+
+
+<property>
+	<name>dfs.http.address</name>
+	<value>avatarnode0:50070</value>
+</property> 
+
+<property>
+	<name>dfs.replication</name>
+	<value>2</value>
+</property>
+
+<property>
+	<name>dfs.replication.min</name>
+	<value>1</value>                                                                                                         
+</property>
+
+<property>
+	<name>dfs.datanode.max.xcievers</name>
+	<value>4096</value>
+</property>
+
+<property>
+	<name>dfs.name.dir</name>
+	<value>/home/wl826214/hadoop/local/namenode</value>
+</property>
+<property>
+	<name>dfs.name.edits.dir</name>
+	<value>/home/wl826214/hadoop/local/editlog</value>
+</property> 
+
+<property>
+	<name>fs.checkpoint.dir</name>
+	<value>/home/wl826214/hadoop/secondarynode</value>
+</property>
+
+<property>
+	<name>dfs.data.dir</name>
+	<value>/home/wl826214/hadoop/block</value>
+</property>
+
+<property>
+	<name>dfs.namenode.logging.level</name>
+	<value>info</value>
+</property>
+
+<property>
+	<name>dfs.datanode.handler.count</name>
+	<value>16</value>
+</property>
+
+<property>
+	<name>dfs.namenode.handler.count</name>
+	<value>16</value>
+</property>
+
+</configuration>

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<!-- Put site-specific property overrides in this file. -->
+
+
+<!-- special parameters for avatarnode -->
+<configuration>
+<property>
+	<name>cProc.network.adapter</name>
+	<value>eth0</value>
+</property> 
+
+</configuration>

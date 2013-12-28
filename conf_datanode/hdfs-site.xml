@@ -1,0 +1,226 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<!-- Put site-specific property overrides in this file. -->
+
+
+<!-- special parameters for avatarnode -->
+<configuration>
+<!--
+<property>
+  <name>dfs.permissions</name>
+  <value>false</value>
+</property>-->
+
+<property>
+	<name>dfs.name.dir.shared0</name>
+	<!--<value>/dinglicom/hadoop/tmp/avatarshare0/share0/namenode</value>-->
+        <value>/home/hadoop/nfs/avatar-hadoop/share0/namenode</value>
+</property> 
+
+<property>
+	<name>dfs.name.edits.dir.shared0</name>
+	<!--<value>/dinglicom/hadoop/tmp/avatarshare0/share0/editlog</value>-->
+        <value>/home/hadoop/nfs/avatar-hadoop/share0/editlog</value>
+</property>
+ 
+<property>
+	<name>dfs.http.address0</name>
+	<value>172.16.40.234:50070</value>
+</property> 
+
+<property>
+	<name>dfs.name.dir.shared1</name>
+	<value>/home/hadoop/nfs/avatar-hadoop/share1/namenode</value>
+</property> 
+
+<property>
+	<name>dfs.name.edits.dir.shared1</name>
+	<value>/home/hadoop/nfs/avatar-hadoop/share1/editlog</value>
+</property> 
+
+<property>
+	<name>dfs.http.address1</name>
+	<value>172.16.4.102:50070</value>
+</property> 
+<property>
+  <name>dfs.block.size</name>
+  <value>67108864</value>
+  <description>The default block size for new files.</description>
+</property>
+<!-- specil parameters for avatarnode -->
+
+
+<property>
+	<name>dfs.http.address</name>
+	<value>172.16.40.234:50070</value>
+</property> 
+
+<property>
+	<name>dfs.replication</name>
+	<value>2</value>
+</property>
+
+<property>
+	<name>dfs.replication.min</name>
+	<value>2</value>
+</property>
+
+<property>
+	<name>dfs.datanode.max.xcievers</name>
+	<value>128</value>
+</property>
+
+<property>
+	<name>dfs.name.dir</name>
+	<!--<value>/dinglicom/hadoop/tmp/local/namenode</value>-->
+        <value>/home/hadoop/hadoop-metadata/avatar-hadoop/namenode</value>
+</property>
+
+<property>
+	<name>dfs.name.edits.dir</name>
+	<!--<value>/dinglicom/hadoop/tmp/local/editlog</value>-->
+       <value>/home/hadoop/hadoop-metadata/avatar-hadoop/editlog</value>
+</property> 
+
+<property>
+	<name>dfs.data.dir</name>
+	<value>/data00/avatar-hadoop-datadir,/data01/avatar-hadoop-datadir,/data02/avatar-hadoop-datadir</value>
+</property>
+
+<property>
+  <name>dfs.balance.bandwidthPerSec</name>
+  <value>209715200</value>
+  <description>
+        Specifies the maximum amount of bandwidth that each datanode
+        can utilize for the balancing purpose in term of
+        the number of bytes per second.
+  </description>
+</property>
+
+<property>
+	<name>dfs.namenode.logging.level</name>
+	<value>info</value>
+</property>
+
+<property>
+	<name>dfs.datanode.handler.count</name>
+	<value>4</value>
+</property>
+
+<property>
+	<name>dfs.namenode.handler.count</name>
+	<value>4</value>
+</property>
+
+<property>
+  <name>hdfs.avatarnode.handler.count</name>
+  <value>4</value>
+  <description>rpc handler count</description>
+</property>
+
+<property>
+  <name>dfs.support.append</name>
+  <value>true</value>
+  <description>Does HDFS allow appends to files?
+               This is currently set to false because there are bugs in the
+               "append code" and is not supported in any prodction cluster.
+  </description>
+</property>
+
+<property>
+  <name>dfs.datanode.du.reserved</name>
+    <value>1000000000</value>
+      <description>Reserved space in bytes per volume. Always leave this much space free for non dfs use.
+      </description>
+</property>
+
+<property>
+  <name>dfs.datanode.du.reserved.percent</name>
+    <!--<value>0.01</value>-->
+    <value>10</value>
+      <description>Reserved space in bytes per volume. Always leave this much space free for non dfs use.
+      </description>
+</property>
+
+<property>
+  <name>dfs.datanode.DF.internal</name>
+    <value>10</value>
+      <description>Reserved space in bytes per volume. Always leave this much space free for non dfs use.
+      </description>
+</property>
+
+<property>
+  <name>dfs.safemode.threshold.pct</name>
+  <value>0.71</value>
+  <description>
+    Specifies the percentage of blocks that should satisfy 
+    the minimal replication requirement defined by dfs.replication.min.
+    Values less than or equal to 0 mean not to start in safe mode.
+    Values greater than 1 will make safe mode permanent.
+  </description>
+</property>
+
+<property>
+  <name>heartbeat.recheck.interval</name>
+  <value>900000</value>
+  <description>
+     heartbeatRecheckInterval is how often namenode checks for expired datanodes
+  </description>
+</property>
+
+<property>
+  <name>dfs.heartbeat.interval</name>
+    <value>9</value>
+    <description>Determines datanode heartbeat interval in seconds.</description>
+</property>
+
+<property>
+  <name>dfs.safemode.extension</name>
+  <value>3000</value>
+  <description>
+    Determines extension of safe mode in milliseconds
+    after the threshold level is reached.
+  </description>
+</property>
+
+<property>
+  <name>dfs.replication.interval</name>
+  <value>1</value> 
+ </property>
+ <property>
+ <name>dfs.max-repl-streams</name>
+ <value>20</value>
+  </property>
+  <property>
+  <name>dfs.replication.work.multiplier.per.iteration</name>
+  <value>10</value> 
+ </property>
+
+<property>
+  <name>dfs.datanode.gctime</name>
+  <value>4</value>
+  <description>System gc time</description>
+</property>
+
+<property>
+  <name>dfs.datanode.gcinterval</name>
+  <value>86400000</value>
+  <description>System gc time</description>
+</property>
+
+<property>
+  <name>dfs.datanode.scan.period.hours</name>
+  <value>24</value>
+  <description>interval 24 hours scan myself datanode's all blocks</description>
+</property>
+
+<property>
+  <name>dfs.blockreport.intervalMsec</name>
+  <value>86400000</value>
+  <description>Determines block reporting interval in milliseconds.</description>
+</property>
+
+
+</configuration>
+

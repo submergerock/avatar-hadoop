@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+if [ $# -le 5 ]; then
+  echo args error
+  exit 1
+fi
+echo $#
+avatarnode0IP=$1
+avatarnode0Local=$2
+avatarnode0NFS=$3
+
+avatarnode1IP=$4
+avatarnode1Local=$5
+avatarnode1NFS=$6
+echo avatarnode0IP = $avatarnode0IP
+echo avatarnode0Local = $avatarnode0Local
+echo avatarnode0NFS = $avatarnode0NFS
+echo avatarnode1IP = $avatarnode1IP
+echo avatarnode1Local = $avatarnode1Local
+echo avatarnode1NFS = $avatarnode1NFS
+
+
+
+sleep 5
+echo \******************************************
+echo \*    1.   delete editlog and fsimage     \*
+echo \******************************************
+echo
+sleep 5
+ssh $avatarnode0IP rm -r -f $avatarnode0Local/*
+ssh $avatarnode1IP rm -r -f $avatarnode1Local/*
+ssh $avatarnode0IP rm -r -f $avatarnode0NFS/*
+ssh $avatarnode1IP rm -r -f $avatarnode1NFS/*
+
+#ssh 192.168.137.11 rm -r -f /home/wl826214/hadoop/local/*
+#ssh 192.168.137.12 rm -r -f /home/wl826214/hadoop/local/*
+#ssh 192.168.137.11 rm -r -f /home/wl826214/hadoop/avatarshare/share0/*
+#ssh 192.168.137.12 rm -r -f /home/wl826214/hadoop/avatarshare/share1/*
+

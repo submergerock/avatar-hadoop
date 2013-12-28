@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<!-- Put site-specific property overrides in this file. -->
+<configuration>
+    <srcPath prefix="hdfs://hadoop.myhost.com:9000/user/warehouse/u_full/*">
+      <destPath> hdfs://192.168.1.9:9000/archive/</destPath>
+      <policy name = "RaidScanWeekly">
+        <property>
+          <name>targetReplication</name>
+          <value>2</value>
+          <description> after RAIDing, decrease the replication factor of the file to this value.
+          </description>
+        </property>
+        <property>
+          <name>metaReplication</name>
+          <value>2</value>
+          <description> the replication factor of the RAID meta file
+          </description>
+        </property>
+        <property>
+          <name>stripeLength</name>
+          <value>10</value>
+          <description> the number of blocks to RAID together
+          </description>
+        </property>
+      </policy>
+    </srcPath>
+</configuration>

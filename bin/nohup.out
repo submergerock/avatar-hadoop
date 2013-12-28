@@ -1,0 +1,119 @@
+11/04/14 19:14:20 INFO namenode.AvatarNode: 0-----AvatarNode.main()-----
+11/04/14 19:14:20 INFO namenode.AvatarNode: STARTUP_MSG: 
+/************************************************************
+STARTUP_MSG: Starting AvatarNode
+STARTUP_MSG:   host = avatarnode1/192.168.137.12
+STARTUP_MSG:   args = [-one]
+STARTUP_MSG:   version = 0.20.1-dev
+STARTUP_MSG:   build =  -r ; compiled by 'wl826214' on Wed Apr 13 13:28:19 EDT 2011
+************************************************************/
+11/04/14 19:14:20 INFO namenode.AvatarNode: 1-----AvatarNode.createAvatarNode()-----
+11/04/14 19:14:20 INFO jvm.JvmMetrics: Initializing JVM Metrics with processName=NameNode, sessionId=null
+11/04/14 19:14:20 INFO metrics.NameNodeMetrics: Initializing NameNodeMeterics using context object:org.apache.hadoop.metrics.spi.NullContext
+11/04/14 19:14:20 INFO namenode.FSNamesystem: fsOwner=wl826214,wl826214
+11/04/14 19:14:20 INFO namenode.FSNamesystem: supergroup=supergroup
+11/04/14 19:14:20 INFO namenode.FSNamesystem: isPermissionEnabled=false
+11/04/14 19:14:20 INFO metrics.FSNamesystemMetrics: Initializing FSNamesystemMetrics using context object:org.apache.hadoop.metrics.spi.NullContext
+11/04/14 19:14:20 INFO namenode.FSNamesystem: Registered FSNamesystemStatusMBean
+11/04/14 19:14:20 INFO namenode.FSImage: Number of files = 1
+11/04/14 19:14:20 INFO namenode.FSImage: Number of files under construction = 0
+11/04/14 19:14:20 INFO namenode.FSImage: Image file of size 98 loaded in 0 seconds.
+11/04/14 19:14:20 INFO namenode.FSImage: Edits file /home/wl826214/hadoop/avatarshare/share1/editlog/current/edits of size 4 edits # 0 loaded in 0 seconds.
+====before fc.size()======
+====after fc.size()======
+====before fc.size()======
+====after fc.size()======
+11/04/14 19:14:20 INFO namenode.FSImage: Image file of size 98 saved in 0 seconds.
+11/04/14 19:14:20 INFO namenode.FSImage: Image file of size 98 saved in 0 seconds.
+====before fc.size()======
+====after fc.size()======
+====before fc.size()======
+====after fc.size()======
+====before fc.size()======
+====after fc.size()======
+====before fc.size()======
+====after fc.size()======
+11/04/14 19:14:21 INFO namenode.FSNamesystem: Finished loading FSImage in 465 msecs
+11/04/14 19:14:21 INFO namenode.FSNamesystem: Total number of blocks = 0
+11/04/14 19:14:21 INFO namenode.FSNamesystem: Number of invalid blocks = 0
+11/04/14 19:14:21 INFO namenode.FSNamesystem: Number of under-replicated blocks = 0
+11/04/14 19:14:21 INFO namenode.FSNamesystem: Number of  over-replicated blocks = 0
+11/04/14 19:14:21 INFO hdfs.StateChange: STATE* Leaving safe mode after 0 secs.
+11/04/14 19:14:21 INFO metrics.RpcMetrics: Initializing RPC Metrics with hostName=AvatarNode, port=9000
+11/04/14 19:14:21 INFO namenode.NameNode: Namenode up at: avatarnode1/192.168.137.12:9000
+11/04/14 19:14:21 INFO ipc.Server: Starting SocketReader
+11/04/14 19:14:21 INFO ipc.Server: IPC Server Responder: starting
+11/04/14 19:14:21 INFO ipc.Server: IPC Server listener on 9000: starting
+11/04/14 19:14:21 INFO ipc.Server: IPC Server handler 0 on 9000: starting
+11/04/14 19:14:21 INFO ipc.Server: IPC Server handler 1 on 9000: starting
+11/04/14 19:14:21 INFO ipc.Server: IPC Server handler 2 on 9000: starting
+11/04/14 19:14:21 INFO ipc.Server: IPC Server handler 3 on 9000: starting
+11/04/14 19:14:21 INFO ipc.Server: IPC Server handler 4 on 9000: starting
+11/04/14 19:14:21 INFO ipc.Server: IPC Server handler 5 on 9000: starting
+11/04/14 19:14:21 INFO ipc.Server: IPC Server handler 6 on 9000: starting
+11/04/14 19:14:21 INFO ipc.Server: IPC Server handler 7 on 9000: starting
+11/04/14 19:14:21 INFO ipc.Server: IPC Server handler 8 on 9000: starting
+11/04/14 19:14:21 INFO ipc.Server: IPC Server handler 9 on 9000: starting
+11/04/14 19:14:21 INFO ipc.Server: IPC Server handler 10 on 9000: starting
+11/04/14 19:14:21 INFO ipc.Server: IPC Server handler 11 on 9000: starting
+11/04/14 19:14:21 INFO ipc.Server: IPC Server handler 12 on 9000: starting
+11/04/14 19:14:21 INFO ipc.Server: IPC Server handler 13 on 9000: starting
+11/04/14 19:14:21 INFO ipc.Server: IPC Server handler 14 on 9000: starting
+11/04/14 19:14:21 INFO ipc.Server: IPC Server handler 15 on 9000: starting
+11/04/14 19:14:21 INFO hdfs.StateChange: STATE* Network topology has 0 racks and 0 datanodes
+11/04/14 19:14:21 INFO hdfs.StateChange: STATE* UnderReplicatedBlocks has 0 blocks
+11/04/14 19:14:21 INFO namenode.FSNamesystem: Skip counting items in the file tree
+11/04/14 19:14:21 INFO util.HostsFileReader: Refreshing hosts (include/exclude) list
+11/04/14 19:14:21 INFO mortbay.log: Logging to org.slf4j.impl.Log4jLoggerAdapter(org.mortbay.log) via org.mortbay.log.Slf4jLog
+11/04/14 19:14:21 INFO http.HttpServer: Added global filtersafety (class=org.apache.hadoop.http.HttpServer$QuotingInputFilter)
+11/04/14 19:14:21 INFO http.HttpServer: Port returned by webServer.getConnectors()[0].getLocalPort() before open() is -1. Opening the listener on 50070
+11/04/14 19:14:21 INFO http.HttpServer: listener.getLocalPort() returned 50070 webServer.getConnectors()[0].getLocalPort() returned 50070
+11/04/14 19:14:21 INFO http.HttpServer: Jetty bound to port 50070
+11/04/14 19:14:21 INFO mortbay.log: jetty-6.1.24
+11/04/14 19:14:21 INFO mortbay.log: Started SelectChannelConnector@avatarnode1:50070
+11/04/14 19:14:21 INFO namenode.NameNode: Web-server up at: avatarnode1:50070
+11/04/14 19:14:21 INFO metrics.RpcMetrics: Initializing RPC Metrics with hostName=AvatarNode, port=9001
+11/04/14 19:14:21 INFO namenode.AvatarNode: AvatarNode up at: /192.168.137.12:9001
+11/04/14 19:14:21 INFO ipc.Server: Starting SocketReader
+11/04/14 19:14:21 INFO ipc.Server: IPC Server Responder: starting
+11/04/14 19:14:21 INFO ipc.Server: IPC Server listener on 9001: starting
+11/04/14 19:14:21 INFO ipc.Server: IPC Server handler 0 on 9001: starting
+11/04/14 19:14:21 INFO ipc.Server: IPC Server handler 1 on 9001: starting
+11/04/14 19:14:21 INFO ipc.Server: IPC Server handler 2 on 9001: starting
+====before fc.size()======
+====after fc.size()======
+====before fc.size()======
+====after fc.size()======
+====before fc.size()======
+====after fc.size()======
+====before fc.size()======
+====after fc.size()======
+====before fc.size()======
+====after fc.size()======
+====before fc.size()======
+====after fc.size()======
+====before fc.size()======
+====after fc.size()======
+====before fc.size()======
+====after fc.size()======
+====before fc.size()======
+====after fc.size()======
+====before fc.size()======
+====after fc.size()======
+====before fc.size()======
+====after fc.size()======
+====before fc.size()======
+====after fc.size()======
+11/04/14 20:00:00 INFO FSNamesystem.audit: ugi=wl826214,wl826214	ip=/192.168.137.12	cmd=listStatus	src=/user	dst=null	perm=null
+11/04/15 02:43:22 INFO namenode.FSNamesystem: Roll Edit Log from 192.168.137.11 editlog file /home/wl826214/hadoop/local/editlog/current/edits editlog timestamp 1302791594000
+11/04/15 02:43:22 INFO namenode.FSNamesystem: Number of transactions: 0 Total time for transactions(ms): 0 Number of transactions batched in Syncs: 0 Number of syncs: 0 SyncTimes(ms):  /home/wl826214/hadoop/avatarshare/share1/editlog/current/edits:0  /home/wl826214/hadoop/local/editlog/current/edits:0 
+11/04/15 02:43:23 INFO namenode.FSNamesystem: Roll FSImage from 192.168.137.11
+11/04/15 02:43:23 INFO namenode.FSNamesystem: Number of transactions: 0 Total time for transactions(ms): 0 Number of transactions batched in Syncs: 0 Number of syncs: 1 SyncTimes(ms):  /home/wl826214/hadoop/avatarshare/share1/editlog/current/edits.new:26  /home/wl826214/hadoop/local/editlog/current/edits.new:5 
+11/04/15 02:44:00 INFO namenode.FSNamesystem: Roll Edit Log from 192.168.137.11 editlog file /home/wl826214/hadoop/local/editlog/current/edits editlog timestamp 1302791643000
+11/04/15 02:44:00 INFO namenode.FSNamesystem: Number of transactions: 0 Total time for transactions(ms): 0 Number of transactions batched in Syncs: 0 Number of syncs: 0 SyncTimes(ms):  /home/wl826214/hadoop/avatarshare/share1/editlog/current/edits:0  /home/wl826214/hadoop/local/editlog/current/edits:0 
+11/04/15 02:44:00 INFO namenode.FSNamesystem: Roll FSImage from 192.168.137.11
+11/04/15 02:44:00 INFO namenode.FSNamesystem: Number of transactions: 0 Total time for transactions(ms): 0 Number of transactions batched in Syncs: 0 Number of syncs: 1 SyncTimes(ms):  /home/wl826214/hadoop/avatarshare/share1/editlog/current/edits.new:16  /home/wl826214/hadoop/local/editlog/current/edits.new:2 
+11/04/15 02:44:47 INFO namenode.AvatarNode: SHUTDOWN_MSG: 
+/************************************************************
+SHUTDOWN_MSG: Shutting down AvatarNode at avatarnode1/192.168.137.12
+************************************************************/
