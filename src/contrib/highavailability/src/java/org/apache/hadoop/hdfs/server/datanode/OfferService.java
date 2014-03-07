@@ -426,14 +426,19 @@ public class OfferService implements Runnable {
         bOfferServiceRuning = false;
         break;
       }catch(OutOfMemoryError ie){//add by wzt
-      	LOG.info("wzt debuginfo:avatardatanode offerService is outofmemory. Will retry in 30 seconds.", ie);
-      	try {
-      	    Thread.sleep(30 * 1000);
-      	} catch (InterruptedException e) {
-      	    // ignore
-      	}
-      }catch(Throwable err){
-        	LOG.error("wzt debuginfo:avatardatanode offerService unknow throwable", err);    	  
+      	//LOG.info("wzt debuginfo:avatardatanode offerService is outofmemory. Will retry in 30 seconds.", ie);
+      	//try {
+      	//    Thread.sleep(30 * 1000);
+      	//} catch (InterruptedException e) {
+      	//    // ignore
+      	//}
+      //}catch(Throwable err){
+      //  	LOG.error("wzt debuginfo:avatardatanode offerService unknow throwable", err);    	  
+      //}
+          LOG.warn("wzt debuginfo:avatardatanode offerService is outofmemory. OfferService:"+StringUtils.stringifyException(ie)
+          		+" ,thread exit... and waiting restart...");
+          bOfferServiceRuning = false;
+          break;
       }
     } // while (shouldRun)
     

@@ -350,6 +350,7 @@ public class TeraGen extends Configured implements Tool {
     job.setOutputValueClass(Text.class);
     job.setInputFormat(RangeInputFormat.class);
     job.setOutputFormat(TeraOutputFormat.class);
+    job.set("mapred.child.java.opts", "-server -Xmx512m -Xms64m");
     JobClient.runJob(job);
     return 0;
   }

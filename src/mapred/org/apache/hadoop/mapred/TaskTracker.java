@@ -2883,6 +2883,10 @@ public class TaskTracker
     public void doGet(HttpServletRequest request, 
                       HttpServletResponse response
                       ) throws ServletException, IOException {
+      //add by wzt 2013-01-14
+      LOG.info("wzt debuginfo:MapOutputServlet doGet:"+request.getLocalAddr()+":"+request.getLocalPort()
+    		  + " from " + request.getRequestURL() + "?" + request.getQueryString());
+      //end add
       String mapId = request.getParameter("map");
       String reduceId = request.getParameter("reduce");
       String jobId = request.getParameter("job");
@@ -2960,6 +2964,7 @@ public class TaskTracker
          * send it to the reducer.
          */
         //open the map-output file
+        LOG.info("wzt debuginfo:MapOutputServlet doGet: local filesystem read "+ mapOutputFileName+" ...");
         mapOutputIn = rfs.open(mapOutputFileName);
 
         //seek to the correct offset for the reduce
@@ -2995,6 +3000,11 @@ public class TaskTracker
           tracker.mapOutputLost(TaskAttemptID.forName(mapId), errorMsg);
         }
         response.sendError(HttpServletResponse.SC_GONE, errorMsg);
+        //add by wzt 2014-0113
+        if(!response.isCommitted()){
+        	response.sendError(HttpServletResponse.SC_GONE, errorMsg);
+        }
+        //end add
         shuffleMetrics.failedOutput();
         throw ie;
       } finally {

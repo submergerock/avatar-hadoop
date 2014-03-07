@@ -243,10 +243,11 @@ public class TeraSort extends Configured implements Tool {
     TeraInputFormat.writePartitionFile(job, partitionFile);
     DistributedCache.addCacheFile(partitionUri, job);
     DistributedCache.createSymlink(job);
-    job.setInt("dfs.replication", 2);
+    //job.setInt("dfs.replication", 2);
+    job.setInt("dfs.replication", 1);
     
-    job.setBoolean("map.mustlocal", true);
-    
+    //job.setBoolean("map.mustlocal", true);
+    job.set("mapred.child.java.opts", "-server -Xmx1000m -Xms64m");
     TeraOutputFormat.setFinalSync(job, true);
     JobClient.runJob(job);
     LOG.info("done");
