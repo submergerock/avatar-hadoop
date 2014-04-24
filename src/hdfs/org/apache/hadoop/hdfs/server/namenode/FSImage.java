@@ -253,6 +253,7 @@ public class FSImage extends Storage {
                              Collection<File> editsDirs,
                                 StartupOption startOpt
                                 ) throws IOException {
+	LOG.info("wzt:recoverTransitionRead...");
     assert startOpt != StartupOption.FORMAT : 
       "NameNode formatting should be performed before reading the image";
     
@@ -369,6 +370,7 @@ public class FSImage extends Storage {
   }
 
   private void doUpgrade() throws IOException {
+	LOG.info("wzt:doUpgrade:");
     if(getDistributedUpgradeState()) {
       // only distributed upgrade need to continue
       // don't do version upgrade
@@ -509,6 +511,7 @@ public class FSImage extends Storage {
    * @throws IOException
    */
   void doImportCheckpoint() throws IOException {
+	LOG.info("wzt:doImportCheckpoint...");
     FSImage ckptImage = new FSImage();
     FSNamesystem fsNamesys = FSNamesystem.getFSNamesystem();
     // replace real image with the checkpoint image
@@ -738,6 +741,7 @@ public class FSImage extends Storage {
    * @throws IOException
    */
   boolean loadFSImage() throws IOException {
+	 LOG.info("wzt:loadFSImage...");
     // Now check all curFiles and see which is the newest
     long latestNameCheckpointTime = Long.MIN_VALUE;
     long latestEditsCheckpointTime = Long.MIN_VALUE;
@@ -994,6 +998,7 @@ public class FSImage extends Storage {
    * @throws IOException
    */
   int loadFSEdits(StorageDirectory sd) throws IOException {
+	  LOG.info("wzt:loadFSEdits...");
     int numEdits = 0;
     EditLogFileInputStream edits = 
       new EditLogFileInputStream(getImageFile(sd, NameNodeFile.EDITS));
@@ -1041,7 +1046,7 @@ public class FSImage extends Storage {
     }
 
     LOG.info("Image file of size " + newFile.length() + " saved in " 
-        + (FSNamesystem.now() - startTime)/1000 + " seconds.");
+        + (FSNamesystem.now() - startTime)/1000 + " seconds. savepath:"+newFile);
   }
 
   /**

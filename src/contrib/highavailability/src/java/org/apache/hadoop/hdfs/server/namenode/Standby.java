@@ -137,7 +137,8 @@ public class Standby implements Runnable {
         if (lastCheckpointTime == 0 ||
             (lastCheckpointTime + 1000 * checkpointPeriod < now) ||
             (earlyScheduledCheckpointTime < now) ||
-            avatarNode.editSize(confg) > checkpointSize) {
+            avatarNode.editSize(confg) > checkpointSize) {//一个小时或者 4M editlog 做一次checkpoint
+        	LOG.info("wzt standby: start checkpoint");
           // schedule an early checkpoint if this current one fails.
           earlyScheduledCheckpointTime = now + CHECKPOINT_DELAY;
           doCheckpoint();
@@ -308,6 +309,8 @@ public class Standby implements Runnable {
     // Ingest till end of edits log
     if (ingest == null) {
       LOG.info("Standby: creating ingest thread to process all transactions.");
+      //getRemoteEditFile 函数实际时获取nfs目录上的editlog  文件,
+      //ingest线程需要读取nfs目录下的editlog文件合并到FSNamesystem,FSDir中
       ingest = new Ingest(this, confg, avatarNode.getRemoteEditsFile(startupConf));
       ingestThread = new Thread(ingest);
       ingestThread.start(); // start thread to process edits.new
@@ -315,7 +318,7 @@ public class Standby implements Runnable {
     // make a last pass over the edits and then quit ingestion
     ingest.quiesce(sig);
     try {
-      ingestThread.join();
+      ingestThread.join();//需要等待 ingest线程结束
       LOG.info("Standby: finished quitting ingest thread just before ckpt.");
     } catch (InterruptedException e) {
       LOG.info("Standby: quiesce interrupted.");
@@ -369,8 +372,8 @@ public class Standby implements Runnable {
     fsName = AvatarNode.getRemoteNamenodeHttpName(conf);
 
     // Initialize other scheduling parameters from the configuration
-    checkpointPeriod = conf.getLong("fs.checkpoint.period", 3600);
-    checkpointSize = conf.getLong("fs.checkpoint.size", 4194304);
+    checkpointPeriod = conf.getLong("fs.checkpoint.period", 3600);//3600 checkpoint
+    checkpointSize = conf.getLong("fs.checkpoint.size", 4194304);//4MB checkpoint
 
     // initialize the webserver for uploading files.
     String infoAddr = 
@@ -392,9 +395,9 @@ public class Standby implements Runnable {
     infoPort = infoServer.getPort();
     conf.set("dfs.secondary.http.address", infoBindAddress + ":" +infoPort);
     LOG.info("Secondary Web-server up at: " + infoBindAddress + ":" +infoPort);
-    LOG.warn("Checkpoint Period   :" + checkpointPeriod + " secs " +
+    LOG.info("Checkpoint Period   :" + checkpointPeriod + " secs " +
              "(" + checkpointPeriod/60 + " min)");
-    LOG.warn("Log Size Trigger    :" + checkpointSize + " bytes " +
+    LOG.info("Log Size Trigger    :" + checkpointSize + " bytes " +
              "(" + checkpointSize/1024 + " KB)");
   }
 

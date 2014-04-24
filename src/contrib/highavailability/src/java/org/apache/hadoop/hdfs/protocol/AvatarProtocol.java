@@ -22,6 +22,7 @@ import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hdfs.protocol.AvatarConstants.Avatar;
 import org.apache.hadoop.hdfs.server.protocol.DatanodeRegistration;
+import org.apache.hadoop.ipc.ProtocolSignature;
 
 /**********************************************************************
  * AvatarProtocol is a superset of the ClientPotocol. It includes

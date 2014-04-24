@@ -557,7 +557,7 @@ public class FSEditLog {
         switch (opcode) {
         case OP_ADD:
         case OP_CLOSE: {
-            //Log.info("wzt:loadFSEdits:OP_ADD OP_CLOSE");
+            Log.info("wzt:loadFSEdits:OP_ADD OP_CLOSE");
           // versions > 0 support per file replication
           // get name and replication
           int length = in.readInt();
@@ -631,58 +631,45 @@ public class FSEditLog {
                                    " clientHolder " +  clientName +
                                    " clientMachine " + clientMachine);
           }
-          INodeFile node = null;
-          try{
-              fsDir.unprotectedDelete(path, mtime);
 
-              // add to the file tree
-              node = (INodeFile)fsDir.unprotectedAddFile(
-                                                        path, permissions,
-                                                        blocks, replication, 
-                                                        mtime, atime, blockSize);
-        	  
-          }catch(Exception er){
-        	  Log.info("wzt:loadFSEdits:OP_ADD OP_CLOSE 1:"+er);
-          }
+          fsDir.unprotectedDelete(path, mtime);
+
+          // add to the file tree
+          INodeFile node = (INodeFile)fsDir.unprotectedAddFile(
+                                                    path, permissions,
+                                                    blocks, replication, 
+                                                    mtime, atime, blockSize);
           if (node != null & opcode == OP_ADD) {
             numOpAdd++;
             //
             // Replace current node with a INodeUnderConstruction.
             // Recreate in-memory lease record.
             //
-            try{
-                INodeFileUnderConstruction cons = new INodeFileUnderConstruction(
-                        node.getLocalNameBytes(),
-                        node.getReplication(), 
-                        node.getModificationTime(),
-                        node.getPreferredBlockSize(),
-                        node.getBlocks(),
-                        node.getPermissionStatus(),
-                        clientName, 
-                        clientMachine, 
-                        null);
-                fsDir.replaceNode(path, node, cons);
-				fsNamesys.leaseManager.addLease(cons.clientName, path);
-            }catch(Exception er){
-            	Log.info("wzt:loadFSEdits:OP_ADD OP_CLOSE 2:"+er);
-            }
+            INodeFileUnderConstruction cons = new INodeFileUnderConstruction(
+                                      node.getLocalNameBytes(),
+                                      node.getReplication(), 
+                                      node.getModificationTime(),
+                                      node.getPreferredBlockSize(),
+                                      node.getBlocks(),
+                                      node.getPermissionStatus(),
+                                      clientName, 
+                                      clientMachine, 
+                                      null);
+            fsDir.replaceNode(path, node, cons);
+            fsNamesys.leaseManager.addLease(cons.clientName, path);
           }
           break;
         } 
         case OP_SET_REPLICATION: {
-          //Log.info("wzt:loadFSEdits:OP_SET_REPLICATION");
+          Log.info("wzt:loadFSEdits:OP_SET_REPLICATION");
           numOpSetRepl++;
           path = FSImage.readString(in);
           short replication = adjustReplication(readShort(in));
-          try{
-              fsDir.unprotectedSetReplication(path, replication, null);        	  
-          }catch(Exception er){
-        	  Log.info("wzt:loadFSEdits:OP_SET_REPLICATION:"+er);
-          }
+          fsDir.unprotectedSetReplication(path, replication, null);
           break;
         } 
         case OP_RENAME: {
-          //Log.info("wzt:loadFSEdits:OP_RENAME");
+          Log.info("wzt:loadFSEdits:OP_RENAME");
           numOpRename++;
           int length = in.readInt();
           if (length != 3) {
@@ -692,18 +679,13 @@ public class FSEditLog {
           String s = FSImage.readString(in);
           String d = FSImage.readString(in);
           timestamp = readLong(in);
-          try{
-              FileStatus dinfo = fsDir.getFileInfo(d);
-              fsDir.unprotectedRenameTo(s, d, timestamp);
-              fsNamesys.changeLease(s, d, dinfo);
-          }catch(Exception er){
-        	  Log.info("wzt:loadFSEdits:OP_RENAME:"+er);
-        	  break;
-          }
+          FileStatus dinfo = fsDir.getFileInfo(d);
+          fsDir.unprotectedRenameTo(s, d, timestamp);
+          fsNamesys.changeLease(s, d, dinfo);
           break;
         }
         case OP_DELETE: {
-          //Log.info("wzt:loadFSEdits:OP_DELETE");
+          Log.info("wzt:loadFSEdits:OP_DELETE");
           numOpDelete++;
           int length = in.readInt();
           if (length != 2) {
@@ -712,17 +694,11 @@ public class FSEditLog {
           }
           path = FSImage.readString(in);
           timestamp = readLong(in);
-          try{
-              fsDir.unprotectedDelete(path, timestamp);        	  
-          }catch(Exception er){
-        	  Log.info("wzt:loadFSEdits:OP_MKDIR"+er);
-        	  break;
-          }
-
+          fsDir.unprotectedDelete(path, timestamp);
           break;
         }
         case OP_MKDIR: {
-          //Log.info("wzt:loadFSEdits:OP_MKDIR");
+          Log.info("wzt:loadFSEdits:OP_MKDIR");
           numOpMkDir++;
           PermissionStatus permissions = fsNamesys.getUpgradePermission();
           int length = in.readInt();
@@ -744,28 +720,18 @@ public class FSEditLog {
           if (logVersion <= -11) {
             permissions = PermissionStatus.read(in);
           }
-          try{
-              fsDir.unprotectedMkdir(path, permissions, timestamp);
-          }catch(Exception er){
-        	  Log.info("wzt:loadFSEdits:OP_MKDIR:"+er);
-        	  break;
-          }
+          fsDir.unprotectedMkdir(path, permissions, timestamp);
           break;
         }
         case OP_SET_GENSTAMP: {
-          //Log.info("wzt:loadFSEdits:OP_SET_GENSTAMP");
+          Log.info("wzt:loadFSEdits:OP_SET_GENSTAMP");
           numOpSetGenStamp++;
           long lw = in.readLong();
-          try{
-              fsDir.namesystem.setGenerationStamp(lw);        	  
-          }catch(Exception er){
-        	  Log.info("wzt:loadFSEdits:OP_SET_GENSTAMP:"+er);
-          }
-
+          fsDir.namesystem.setGenerationStamp(lw);
           break;
         } 
         case OP_DATANODE_ADD: {
-          //Log.info("wzt:loadFSEdits:OP_DATANODE_ADD");
+          Log.info("wzt:loadFSEdits:OP_DATANODE_ADD");
           numOpOther++;
           FSImage.DatanodeImage nodeimage = new FSImage.DatanodeImage();
           nodeimage.readFields(in);
@@ -773,7 +739,7 @@ public class FSEditLog {
           break;
         }
         case OP_DATANODE_REMOVE: {
-          //Log.info("wzt:loadFSEdits:OP_DATANODE_REMOVE");	
+          Log.info("wzt:loadFSEdits:OP_DATANODE_REMOVE");	
           numOpOther++;
           DatanodeID nodeID = new DatanodeID();
           nodeID.readFields(in);
@@ -781,81 +747,60 @@ public class FSEditLog {
           break;
         }
         case OP_SET_PERMISSIONS: {
-          //Log.info("wzt:loadFSEdits:OP_SET_PERMISSIONS");        	
+          Log.info("wzt:loadFSEdits:OP_SET_PERMISSIONS");        	
           numOpSetPerm++;
           if (logVersion > -11){
               throw new IOException("Unexpected opcode " + opcode
                       + " for version " + logVersion);
           }
-          try{
-              fsDir.unprotectedSetPermission(
-                      FSImage.readString(in), FsPermission.read(in));
-          }catch(Exception er){
-        	  Log.info("wzt:loadFSEdits:OP_SET_PERMISSIONS:"+er);
-        	  break;
-          }
+          fsDir.unprotectedSetPermission(
+              FSImage.readString(in), FsPermission.read(in));
           break;
         }
         case OP_SET_OWNER: {
-          //Log.info("wzt:loadFSEdits:OP_SET_OWNER");
+          Log.info("wzt:loadFSEdits:OP_SET_OWNER");
           numOpSetOwner++;
-          if (logVersion > -11){
-              throw new IOException("Unexpected opcode " + opcode
-                      + " for version " + logVersion);
-          }
-          try{
-              fsDir.unprotectedSetOwner(FSImage.readString(in),
-                      FSImage.readString_EmptyAsNull(in),
-                      FSImage.readString_EmptyAsNull(in));
-          }catch(Exception er){
-        	  Log.info("wzt:loadFSEdits:OP_SET_OWNER:"+er);
-          }
+          if (logVersion > -11)
+            throw new IOException("Unexpected opcode " + opcode
+                                  + " for version " + logVersion);
+          fsDir.unprotectedSetOwner(FSImage.readString(in),
+              FSImage.readString_EmptyAsNull(in),
+              FSImage.readString_EmptyAsNull(in));
           break;
         }
         case OP_SET_NS_QUOTA: {
-          //Log.info("wzt:loadFSEdits:OP_SET_NS_QUOTA");
+          Log.info("wzt:loadFSEdits:OP_SET_NS_QUOTA");
           if (logVersion > -16) {
             throw new IOException("Unexpected opcode " + opcode
                 + " for version " + logVersion);
           }
-          try{
-              fsDir.unprotectedSetQuota(FSImage.readString(in), 
-                      readLongWritable(in), 
-                      FSConstants.QUOTA_DONT_SET);
-          }catch(Exception er){
-        	  Log.info("wzt:loadFSEdits:OP_SET_NS_QUOTA:"+er);
-          }
+          fsDir.unprotectedSetQuota(FSImage.readString(in), 
+                                    readLongWritable(in), 
+                                    FSConstants.QUOTA_DONT_SET);
           break;
         }
         case OP_CLEAR_NS_QUOTA: {
-        	//Log.info("wzt:loadFSEdits:OP_CLEAR_NS_QUOTA");
+        	Log.info("wzt:loadFSEdits:OP_CLEAR_NS_QUOTA");
           if (logVersion > -16) {
             throw new IOException("Unexpected opcode " + opcode
                 + " for version " + logVersion);
           }
-          try{
-              fsDir.unprotectedSetQuota(FSImage.readString(in),
-                      FSConstants.QUOTA_RESET,
-                      FSConstants.QUOTA_DONT_SET);
-          }catch(Exception er){
-        	  Log.info("wzt:loadFSEdits:OP_CLEAR_NS_QUOTA:"+er);
-          }
+          fsDir.unprotectedSetQuota(FSImage.readString(in),
+                                    FSConstants.QUOTA_RESET,
+                                    FSConstants.QUOTA_DONT_SET);
           break;
         }
 
         case OP_SET_QUOTA:
-          //Log.info("wzt:loadFSEdits:OP_SET_QUOTA");
-          try{
-              fsDir.unprotectedSetQuota(FSImage.readString(in),
-                      readLongWritable(in),
-                      readLongWritable(in));
-          }catch(Exception er){
-              Log.info("wzt:loadFSEdits:OP_SET_QUOTA:"+er);
-          }
+          Log.info("wzt:loadFSEdits:OP_SET_QUOTA");
+          fsDir.unprotectedSetQuota(FSImage.readString(in),
+                                    readLongWritable(in),
+                                    readLongWritable(in));
+                                      
           break;
 
         case OP_TIMES: {
-          //Log.info("wzt:loadFSEdits:OP_TIMES");	
+          Log.info("wzt:loadFSEdits:OP_TIMES");	
           numOpTimes++;
           int length = in.readInt();
           if (length != 3) {
@@ -865,11 +810,7 @@ public class FSEditLog {
           path = FSImage.readString(in);
           mtime = readLong(in);
           atime = readLong(in);
-          try{
-              fsDir.unprotectedSetTimes(path, mtime, atime, true);        	  
-          }catch(Exception er){
-        	  Log.info("wzt:loadFSEdits:OP_TIMES:"+er);
-          }
+          fsDir.unprotectedSetTimes(path, mtime, atime, true);
           break;
         }
         default: {

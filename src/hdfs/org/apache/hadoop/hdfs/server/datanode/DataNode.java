@@ -82,6 +82,7 @@ import org.apache.hadoop.io.ArrayWritable;
 import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
+import org.apache.hadoop.ipc.ProtocolSignature;
 import org.apache.hadoop.ipc.RPC;
 import org.apache.hadoop.ipc.RemoteException;
 import org.apache.hadoop.ipc.Server;
@@ -428,8 +429,10 @@ public class DataNode extends Configured
     LOG.info("dnRegistration = " + dnRegistration);
     //--------------------------by wl826214 -------2011.10.17
     boolean startCprocFramework = conf.getBoolean("dfs.cprocframework.start", false) ;
-    if(startCprocFramework)
-    startMyJob(conf);
+    if(startCprocFramework){
+        startMyJob(conf);    	
+    }
+
   }
 
   /**
@@ -664,9 +667,9 @@ public class DataNode extends Configured
       myMetrics.shutdown();
     }
     //add by wl--2011.9.19--3
-    if(this.myJob != null){
-    	this.myJob.stop();
-    }
+    //if(this.myJob != null){
+    //	this.myJob.stop();
+    //}
   }
   
   
@@ -1769,6 +1772,7 @@ public String[]  getBlockFiles(Block[] b) {
 //		
 //		return 
 //	}
+
 //-------------wl826214------------2011.9.19--------
 public void submitJob(Job e) throws IOException{
 	   this.myJob.putJob(e);
@@ -1791,4 +1795,18 @@ public void stopJob(Job j) throws IOException {
 public Configuration getConfiguration() {
     return this.conf;
   }
+
+/*add by wzt 2014-0310
+public ProtocolSignature getProtocolSignature(String protocol,
+	      long clientVersion, int clientMethodsHash) throws IOException {
+	    return ProtocolSignature.getProtocolSignature(
+	        this, protocol, clientVersion, clientMethodsHash);
+	  }
+*/
+//wzt test
+public String getWztTestStr(String param){
+	return new String("getWztTestStr");
+}
+//end test
+
 }

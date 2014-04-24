@@ -41,6 +41,42 @@ public class UTF8 implements WritableComparable {
   private byte[] bytes = EMPTY_BYTES;
   private int length;
 
+  /* Used for string conversions*/
+  private static final int MAX_STRING_LENGTH = 8000;
+  private static final int MAX_BYTE_LENGTH = 1000;
+  private static final ThreadLocal<char[]> charArrays = new ThreadLocal<char[]>() {
+    protected char[] initialValue() {
+      return new char[MAX_STRING_LENGTH];
+    }
+  };
+  
+  private static final ThreadLocal<byte[]> byteArrays = new ThreadLocal<byte[]>() {
+	    protected byte[] initialValue() {
+	      return new byte[MAX_BYTE_LENGTH];
+	    }
+	  };
+	  
+	  public static final char[] getCharArray(int len) {
+	    if(len <= MAX_STRING_LENGTH) {
+	      // return cached array
+	      return charArrays.get(); 
+	    }
+	    // otherwise allocate temporary char[]
+	    return new char[len];
+	  }
+
+  public static final byte[] getByteArray(int len) {
+	    byte[] byteArray = byteArrays.get();
+	    if (byteArray.length < len) {
+	      byteArray = new byte[len];
+	      byteArrays.set(byteArray);
+	    }
+	    return byteArray;
+	  }
+
+  public static final byte MIN_ASCII_CODE = 0;
+  public static final byte MAX_ASCII_CODE = 0x7f;
+
   public UTF8() {
     //set("");
   }
@@ -193,6 +229,7 @@ public class UTF8 implements WritableComparable {
     return result;
   }
 
+  
   /** Read a UTF-8 encoded string.
    *
    * @see DataInput#readUTF()
@@ -227,6 +264,31 @@ public class UTF8 implements WritableComparable {
     }
   }
 
+  public static int writeStringOpt(DataOutput out, String s) throws IOException {
+	    int len = s.length();
+	    byte[] bytes = getByteArray(len);
+	    char[] charArray = getCharArray(len);
+	    s.getChars(0, len, charArray, 0);
+	    if (copyStringToBytes(s, charArray, bytes, len)) {
+	      out.writeShort(len);
+	      out.write(bytes, 0, len);
+	      return len;
+	    }
+	    return writeString(out, s);
+	  }
+  
+  private static boolean copyStringToBytes(String s, char[] charArray,
+	      byte[] bytes, int len) {
+	    s.getChars(0, len, charArray, 0);
+	    for (int i = 0; i < len; i++) {
+	      if (charArray[i] > MAX_ASCII_CODE) {
+	        return false;
+	      }
+	      bytes[i] = (byte) charArray[i];
+	    }
+	    return true;
+	  }
+  
   /** Write a UTF-8 encoded string.
    *
    * @see DataOutput#writeUTF(String)

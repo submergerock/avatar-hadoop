@@ -26,6 +26,7 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hdfs.job.Job;
 import org.apache.hadoop.hdfs.server.datanode.FSDatasetInterface;
 import org.apache.hadoop.io.ArrayWritable;
+import org.apache.hadoop.ipc.ProtocolSignature;
 import org.apache.hadoop.ipc.VersionedProtocol;
 
 /** An client-datanode protocol for block recovery
@@ -66,5 +67,8 @@ public interface ClientDatanodeProtocol extends VersionedProtocol {
 //-------------wl826214------------2011.9.20--------
   public void stopJob(Job j) throws IOException;
 	//-------add by wl826214 ---------2011.11.11
-	public Configuration getConfiguration() ;
+  public Configuration getConfiguration() ;
+  //wzt test
+  public String getWztTestStr(String param);
+  //end test
 }

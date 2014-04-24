@@ -62,6 +62,11 @@ public class Job extends JobContext {
     }
   }
 
+  //add by wzt 20140307
+  public void setJvmParams(String params){
+	  conf.set("mapred.child.java.opts", params);
+  }
+  //end add
   /**
    * Set the number of reduce tasks for the job.
    * @param tasks the number of reduce tasks
@@ -123,6 +128,7 @@ public class Job extends JobContext {
   public void setJarByClass(Class<?> cls) {
     conf.setJarByClass(cls);
   }
+  
   
   /**
    * Get the pathname of the job's jar.

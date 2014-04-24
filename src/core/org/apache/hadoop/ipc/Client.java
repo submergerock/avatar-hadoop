@@ -187,7 +187,9 @@ public class Client {
     private AtomicLong lastActivity = new AtomicLong();// last I/O activity time
     private AtomicBoolean shouldCloseConnection = new AtomicBoolean();  // indicate if the connection is closed
     private IOException closeException; // close reason
-
+    //add by wzt 2014-0415
+    private int rpcTimeout=180*1000;//max waiting time for each RPC
+    //end add
     public Connection(ConnectionId remoteId) throws IOException {
       this.remoteId = remoteId;
       this.server = remoteId.getAddress();
@@ -196,6 +198,7 @@ public class Client {
                                        remoteId.getAddress().getHostName());
       }
       
+      this.rpcTimeout = 180*1000;
       UserGroupInformation ticket = remoteId.getTicket();
       Class<?> protocol = remoteId.getProtocol();
       header = 
@@ -242,11 +245,20 @@ public class Client {
        * otherwise, throw the timeout exception.
        */
       private void handleTimeout(SocketTimeoutException e) throws IOException {
-        if (shouldCloseConnection.get() || !running.get()) {
-          throw e;
+        //update by wzt 2014-0415
+    	//if (shouldCloseConnection.get() || !running.get()) {
+        //  throw e;
+        //} else {
+        //  sendPing();
+        //}
+      	if (shouldCloseConnection.get() || !running.get() || rpcTimeout > 0) {
+      		LOG.info("wzt debuginfo:rpc handleTimeout="+rpcTimeout +" throw:"+e);
+            throw e;
         } else {
+        	LOG.info("wzt debuginfo:rpc handleTimeout sendPing() ");
           sendPing();
         }
+    	//end update
       }
       
       /** Read a byte from the stream.
@@ -302,6 +314,11 @@ public class Client {
             this.socket.setTcpNoDelay(tcpNoDelay);
             // connection time out is 20s
             NetUtils.connect(this.socket, remoteId.getAddress(), 20000);
+            //add by wzt 2014-0415
+            if(this.rpcTimeout > 0){
+            	pingInterval = this.rpcTimeout;
+            }
+            //end add
             this.socket.setSoTimeout(pingInterval);
             break;
           } catch (SocketTimeoutException toe) {

@@ -179,7 +179,7 @@ public class Ingest implements Runnable {
       // numbers, so we avoid having to call available
       boolean available = true;
       try {
-        logVersion = in.readByte();
+        logVersion = in.readByte();//editlog 不能> 2G，否则会报错
       } catch (EOFException e) {
         available = false;
       }

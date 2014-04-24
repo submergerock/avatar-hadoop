@@ -55,11 +55,10 @@ import org.apache.hadoop.security.authorize.ConfiguredPolicy;
 import org.apache.hadoop.security.authorize.PolicyProvider;
 import org.apache.hadoop.security.authorize.RefreshAuthorizationPolicyProtocol;
 import org.apache.hadoop.security.authorize.ServiceAuthorizationManager;
-import org.apache.hadoop.hdfs.job.Job;
-import org.apache.hadoop.hdfs.job.JobProtocol;
-import org.apache.hadoop.hdfs.job.MyJob;
-import org.cstor.cproc.cloudComputingFramework.CProcFrameworkProtocol;
-
+//import org.apache.hadoop.hdfs.job.Job;
+//import org.apache.hadoop.hdfs.job.JobProtocol;
+//import org.apache.hadoop.hdfs.job.MyJob;
+//import org.cstor.cproc.cloudComputingFramework.CProcFrameworkProtocol;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
@@ -772,8 +771,9 @@ private void startTrashEmptier(Configuration conf) throws IOException {
            +"from "+nodeReg.getName()+" "+blist.getNumberOfBlocks() +" blocks");
 
     namesystem.processReport(nodeReg, blist);
-    if (getFSImage().isUpgradeFinalized())
-      return DatanodeCommand.FINALIZE;
+    if (getFSImage().isUpgradeFinalized()){
+        return DatanodeCommand.FINALIZE;    	
+    }
     return null;
   }
 
@@ -1293,6 +1293,12 @@ public LocatedBlock addBlockAssignDN(String src,
 		
 	}
 //end---------add by wanglei---------2011.12.9
-	
+	/*add by wzt 2014-0310
+	public ProtocolSignature getProtocolSignature(String protocol,
+		      long clientVersion, int clientMethodsHash) throws IOException {
+		    return ProtocolSignature.getProtocolSignature(
+		        this, protocol, clientVersion, clientMethodsHash);
+		  }
+	*/
 	
 }

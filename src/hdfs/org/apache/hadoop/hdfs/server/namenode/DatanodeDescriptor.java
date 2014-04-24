@@ -371,8 +371,9 @@ public class DatanodeDescriptor extends DatanodeInfo {
     BlockInfo delimiter = new BlockInfo(new Block(), 1);
     boolean added = this.addBlock(delimiter);
     assert added : "Delimiting block cannot be present in the node";
-    if(newReport == null)
-      newReport = new BlockListAsLongs( new long[0]);
+    if(newReport == null){
+        newReport = new BlockListAsLongs( new long[0]);    	
+    }
     // scan the report and collect newly reported blocks
     // Note we are taking special precaution to limit tmp blocks allocated
     // as part this block report - which why block list is stored as longs
@@ -403,8 +404,9 @@ public class DatanodeDescriptor extends DatanodeInfo {
     // collect blocks that have not been reported
     // all of them are next to the delimiter
     Iterator<Block> it = new BlockIterator(delimiter.getNext(0), this);
-    while(it.hasNext())
-      toRemove.add(it.next());
+    while(it.hasNext()){
+        toRemove.add(it.next());    	
+    }
     this.removeBlock(delimiter);
   }
 

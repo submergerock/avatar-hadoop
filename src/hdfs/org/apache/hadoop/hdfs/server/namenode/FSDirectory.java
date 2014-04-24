@@ -79,6 +79,7 @@ public class FSDirectory implements FSConstants, Closeable {
   void loadFSImage(Collection<File> dataDirs,
                    Collection<File> editsDirs,
                    StartupOption startOpt) throws IOException {
+	 Log.info("wzt:loadFSImage...");
     // format before starting up if requested
     if (startOpt == StartupOption.FORMAT) {
       fsImage.setStorageDirectories(dataDirs, editsDirs);
@@ -542,8 +543,9 @@ public class FSDirectory implements FSConstants, Closeable {
   void unprotectedSetPermission(String src, FsPermission permissions) throws FileNotFoundException {
     synchronized(rootDir) {
         INode inode = rootDir.getNode(src);
-        if(inode == null)
-            throw new FileNotFoundException("File does not exist: " + src);
+        if(inode == null){
+            throw new FileNotFoundException("File does not exist: " + src);        	
+        }
         inode.setPermission(permissions);
     }
   }

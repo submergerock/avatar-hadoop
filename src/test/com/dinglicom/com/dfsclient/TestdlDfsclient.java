@@ -34,7 +34,8 @@ public class TestdlDfsclient {
     
     public void initlize(String dfsTaskDir) throws IOException{
         JobConf jobConf = new JobConf(new Configuration(), TestdlDfsclient.class);
-        InetSocketAddress inAddress = new InetSocketAddress("vmbd04",9000);
+        //InetSocketAddress inAddress = new InetSocketAddress("vmbd04",9000);
+        InetSocketAddress inAddress = new InetSocketAddress("localhost",9000);
         dfsClient = new DFSClient(inAddress,jobConf);
         //dfsClient = new DistributedFileSystem(inAddress,myConf);
         if(!dfsClient.mkdirs(dfsTaskDir)){
@@ -61,6 +62,7 @@ public class TestdlDfsclient {
     	boolean success = false;
     	String createFilePath = null;
     	BlockLocation[] lbk = null;
+    	short nReplication = 1;
     	do{
     		 // create file until is succeeds or max exceptions reached
             try {
@@ -69,7 +71,7 @@ public class TestdlDfsclient {
           	out = (OutputStream)this.dfsClient.create(createFilePath, 
           			FsPermission.getDefault(), 
           			false, 
-          			(short)2, 
+          			nReplication, 
           			1024, 
           			null, 
           			4096);

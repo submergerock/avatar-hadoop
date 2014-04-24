@@ -132,7 +132,9 @@ public class AvatarNode extends NameNode implements AvatarProtocol {
   private Configuration confg;             // config for the standby namenode
   private Configuration startupConf;       // config for the namenode
   private Thread standbyThread;            // the standby daemon thread
-
+  //add by wzt 2014-0311
+  public static long sessionCount=0;
+  //end add
   AvatarNode(Configuration conf) throws IOException {
     super(conf);
     initialize(conf);
@@ -302,15 +304,18 @@ public class AvatarNode extends NameNode implements AvatarProtocol {
   }
 
   /**
-   * @inheritDoc
+   * @throws InterruptedException 
+ * @inheritDoc
    */
    public Block[] blockReceivedNew(DatanodeRegistration nodeReg,
                                    Block blocks[],
-                                   String delHints[]) throws IOException {
+                                   String delHints[]) throws IOException{
+	sessionCount++;
     super.blockReceived(nodeReg, blocks, delHints);
     List<Block> failed = new ArrayList<Block>(); 
     for (int i = 0; i < blocks.length; i++) {
       Block block = blocks[i];
+      LOG.info(" blockReceived namesystem lock++++ sessionCount:"+sessionCount);
       synchronized(namesystem) {
         BlockInfo storedBlock = namesystem.blocksMap.getStoredBlock(block);
         if (storedBlock == null || storedBlock.getINode() == null) {
@@ -319,10 +324,11 @@ public class AvatarNode extends NameNode implements AvatarProtocol {
                                    + block + " on " + nodeReg.getName()
                                    + " size " + block.getNumBytes()
                                    + " But it does not belong to any file."
-                                   + " Retry later.");
+                                   + " Retry later. sessionCount:"+sessionCount);
           failed.add(block);
         }
       }
+      LOG.info(" blockReceived namesystem unlock---- sessionCount:"+sessionCount);
     }
     return failed.toArray(new Block[failed.size()]);
   }
@@ -380,6 +386,11 @@ public class AvatarNode extends NameNode implements AvatarProtocol {
     StartupOption startOpt = StartupOption.ACTIVE;
     for (int i=0; i < argsLen; i++) {
       String cmd = args[i];
+      System.out.println(StartupOption.STANDBY.getName()+"\n"+StartupOption.SYNC.getName()
+    		  +"\n"+StartupOption.NODEZERO.getName()
+    		  +"\n"+StartupOption.NODEONE.getName()+"\n"+StartupOption.FORMAT.getName()
+    		  +"\n"+StartupOption.REGULAR.getName()+"\n"+StartupOption.ROLLBACK.getName()
+    		  +"\n"+StartupOption.FINALIZE.getName()+"\n"+StartupOption.IMPORT.getName());
       if (StartupOption.STANDBY.getName().equalsIgnoreCase(cmd)) {
         startOpt = StartupOption.STANDBY;
       } else if (StartupOption.SYNC.getName().equalsIgnoreCase(cmd)) {
@@ -418,6 +429,16 @@ public class AvatarNode extends NameNode implements AvatarProtocol {
                                  Configuration conf) throws IOException {
     if (conf == null) {
       conf = new Configuration();
+      //wzt
+      conf.reloadConfiguration();
+      conf.addResource(new Path("/home/hadoop/avatar-hadoop/conf/core-default.xml"));
+      conf.addResource(new Path("/home/hadoop/avatar-hadoop/conf/core-site.xml"));
+      conf.addResource(new Path("/home/hadoop/avatar-hadoop/conf/hdfs-default.xml"));
+      conf.addResource(new Path("/home/hadoop/avatar-hadoop/conf/hdfs-site.xml"));
+      conf.addResource(new Path("/home/hadoop/avatar-hadoop/conf/mapred-default.xml"));
+      conf.addResource(new Path("/home/hadoop/avatar-hadoop/conf/mapred-site.xml"));
+      conf.getProps();
+      //end 
     }
     Configuration startupConf = conf;   // save configuration at startup
     StartupOption startOpt = parseArguments(argv);
@@ -1283,5 +1304,12 @@ public class AvatarNode extends NameNode implements AvatarProtocol {
   	
   }
 //added by wanglei --2012.2.12 --end
+  /*add by wzt 2014-0310
+  public ProtocolSignature getProtocolSignature(String protocol,
+	      long clientVersion, int clientMethodsHash) throws IOException {
+	    return ProtocolSignature.getProtocolSignature(
+	        this, protocol, clientVersion, clientMethodsHash);
+	  }
+*/
   
 }

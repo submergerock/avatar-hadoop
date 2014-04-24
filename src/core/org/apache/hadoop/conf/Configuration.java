@@ -179,8 +179,10 @@ public class Configuration implements Iterable<Map.Entry<String,String>>,
           "core-default.xml, mapred-default.xml and hdfs-default.xml " +
           "respectively");
     }
+    //wzt
     addDefaultResource("core-default.xml");
     addDefaultResource("core-site.xml");
+    //end
   }
   
   private Properties properties;
@@ -973,7 +975,8 @@ public class Configuration implements Iterable<Map.Entry<String,String>>,
       return null;
     }
   }
-
+  //update by wzt 2014-0401
+  /*
   private synchronized Properties getProps() {
     if (properties == null) {
       properties = new Properties();
@@ -982,8 +985,17 @@ public class Configuration implements Iterable<Map.Entry<String,String>>,
         properties.putAll(overlay);
     }
     return properties;
-  }
-
+  }*/
+  public synchronized Properties getProps() {
+	    if (properties == null) {
+	      properties = new Properties();
+	      loadResources(properties, resources, quietmode);
+	      if (overlay!= null)
+	        properties.putAll(overlay);
+	    }
+	    return properties;
+	  }
+//end update
   /**
    * Return the number of keys in the configuration.
    *

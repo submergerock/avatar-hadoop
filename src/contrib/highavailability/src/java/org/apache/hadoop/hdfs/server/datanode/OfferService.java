@@ -183,6 +183,7 @@ public class OfferService implements Runnable {
     long peekThCount = 0;
     long daemonThreadCount = 0;
     //end add
+    long sessionCount = 0;
     
     while (shouldRun) {
       try {
@@ -243,6 +244,7 @@ public class OfferService implements Runnable {
           Double compare = (Double)(1-freePhysicalMemorySize*1.0/totaVirtualMemory)*100;
           
           long hearbeatspenttime= System.currentTimeMillis();
+          //发送心跳，接受命令
           DatanodeCommand[] cmds = namenode.sendHeartbeat(dnRegistration,
         		  capacity,
         		  dfsUsed,
@@ -311,12 +313,14 @@ public class OfferService implements Runnable {
             delHintArray[i] = blockArray[i].delHints;
             blist[i] = new Block(blockArray[i]);
           }
-
+          
+          sessionCount++;
+          LOG.info("wzt debuginfo:"+avatarnodeAddress.getHostName()+" sessionCount:"+sessionCount+" lock++++");
           Block[] failed = avatarnode.blockReceivedNew(dnRegistration, blist, 
                                                        delHintArray);
 
-          LOG.info("wzt debuginfo: avatardatanode send to "+avatarnodeAddress.getHostName()+":"+avatarnodeAddress.getPort()+" receive newblock list length="+blist.length
-        		  +" delHintArray length="+delHintArray.length);
+          LOG.info("wzt debuginfo: avatardatanode send to "+avatarnodeAddress.getHostName()+" sessionCount:"+sessionCount+" unlock---- :"+avatarnodeAddress.getPort()+" receive newblock list length="+blist.length
+        		  +" delHintArray length="+delHintArray.length+"  failedBlock len="+failed.length);
 
           
           synchronized (receivedBlockList) {
@@ -360,7 +364,7 @@ public class OfferService implements Runnable {
           // and can be safely GC'ed.
           //
           long brStartTime = anode.now();
-          Block[] bReport = data.getBlockReport();
+          Block[] bReport = data.getBlockReport();//获取volum下的所有block文件名称
           DatanodeCommand cmd = namenode.blockReport(dnRegistration,
                   BlockListAsLongs.convertToArrayLongs(bReport));
           long brTime = anode.now() - brStartTime;

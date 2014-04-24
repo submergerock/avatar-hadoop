@@ -105,7 +105,7 @@ public class HttpServer implements FilterContainer {
     webServer.addConnector(listener);
 
     webServer.setThreadPool(new QueuedThreadPool());
-
+    //对于eclipse 的单步调试，这里需要修改成自己的url
     final String appDir = getWebAppsPath();
     ContextHandlerCollection contexts = new ContextHandlerCollection();
     webServer.setHandler(contexts);
@@ -332,7 +332,7 @@ public class HttpServer implements FilterContainer {
    * @throws IOException if 'webapps' directory cannot be found on CLASSPATH.
    */
   protected String getWebAppsPath() throws IOException {
-    URL url = getClass().getClassLoader().getResource("webapps");
+	URL url = getClass().getClassLoader().getResource("webapps");
     if (url == null) 
       throw new IOException("webapps not found in CLASSPATH"); 
     return url.toString();

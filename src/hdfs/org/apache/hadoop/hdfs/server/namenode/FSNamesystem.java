@@ -3271,6 +3271,8 @@ public class FSNamesystem implements FSConstants, FSNamesystemMBean {
   void heartbeatCheck() {
 	  //LOG.info("-------FSNamesystem.heartbeatCheck()-------");
     boolean allAlive = false;
+    long heartBeatSessionCount=0;
+    
     while (!allAlive) {
       boolean foundDead = false;
       DatanodeID nodeID = null;
@@ -3287,11 +3289,15 @@ public class FSNamesystem implements FSConstants, FSNamesystemMBean {
           }
         }
       }
-
+      
       // acquire the fsnamesystem lock, and then remove the dead node.
+      heartBeatSessionCount++;
       if (foundDead) {
+    	LOG.info("wzt debuginfo: heartbeatCheck FSNamesystem lock++++  heartBeatSessionCount:"+heartBeatSessionCount);
         synchronized (this) {
+          LOG.info("wzt debuginfo: heartbeatCheck FSNamesystem heartbeats lock++++ heartBeatSessionCount:"+heartBeatSessionCount);
           synchronized(heartbeats) {
+            LOG.info("wzt debuginfo: heartbeatCheck FSNamesystem heartbeats datanodeMap lock++++  heartBeatSessionCount:"+heartBeatSessionCount);
             synchronized (datanodeMap) {
               DatanodeDescriptor nodeInfo = null;
               try {
@@ -3305,8 +3311,11 @@ public class FSNamesystem implements FSConstants, FSNamesystemMBean {
                 removeDatanode(nodeInfo);
               }
             }
+            LOG.info("wzt debuginfo: heartbeatCheck FSNamesystem heartbeats datanodeMap unlock----  heartBeatSessionCount:"+heartBeatSessionCount);
           }
+          LOG.info("wzt debuginfo: heartbeatCheck FSNamesystem heartbeats unlock---- heartBeatSessionCount:"+heartBeatSessionCount);
         }
+        LOG.info("wzt debuginfo: heartbeatCheck FSNamesystem unlock----");
       }
       allAlive = !foundDead;
     }

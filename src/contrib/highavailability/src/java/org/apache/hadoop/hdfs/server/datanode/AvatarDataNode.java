@@ -497,8 +497,8 @@ public class AvatarDataNode extends DataNode {
           of1.start();
           ofThreadIDs[0] = of1.getId();
 
-          LOG.info("wzt debuginfo:avatardatanode start OfferService1 "+namenode1+","+nameAddr1
-        		  +" "+avatarnode1+","+avatarAddr1+" complete");
+          LOG.info("wzt debuginfo:avatardatanode start OfferService1 namenode1"+nameAddr1
+        		  +" avatarnode1 "+avatarAddr1+" complete");
           
         }
         if (namenode2 != null && !doneRegister2 &&
@@ -510,8 +510,8 @@ public class AvatarDataNode extends DataNode {
           of2.start();
           ofThreadIDs[1] = of2.getId();
 
-          LOG.info("wzt debuginfo:avatardatanode start OfferService2 "+namenode2+","+nameAddr2
-        		  +" "+avatarnode2+","+avatarAddr2+" complete");
+          LOG.info("wzt debuginfo:avatardatanode start OfferService2 namenode2"+nameAddr2
+        		  +"  avatarnode2  "+avatarAddr2+" complete");
         }
         //add by wzt 2013-12.27
         Thread.sleep(1000);//等待一会
@@ -770,8 +770,21 @@ public class AvatarDataNode extends DataNode {
    */
   public static AvatarDataNode instantiateDataNode(String args[],
                                       Configuration conf) throws IOException {
-    if (conf == null)
-      conf = new Configuration();
+    if (conf == null){
+        conf = new Configuration();
+        //wzt
+        conf.reloadConfiguration();
+        conf.addResource(new Path("/home/hadoop/avatar-hadoop/conf/core-default.xml"));
+        conf.addResource(new Path("/home/hadoop/avatar-hadoop/conf/core-site.xml"));
+        conf.addResource(new Path("/home/hadoop/avatar-hadoop/conf/hdfs-default.xml"));
+        conf.addResource(new Path("/home/hadoop/avatar-hadoop/conf/hdfs-site.xml"));
+        conf.addResource(new Path("/home/hadoop/avatar-hadoop/conf/mapred-default.xml"));
+        conf.addResource(new Path("/home/hadoop/avatar-hadoop/conf/mapred-site.xml"));
+        conf.getProps();
+        //end 
+        
+    }
+
     if (!parseArguments(args, conf)) {
       printUsage();
       return null;

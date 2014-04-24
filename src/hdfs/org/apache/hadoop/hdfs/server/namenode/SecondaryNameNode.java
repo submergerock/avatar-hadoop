@@ -575,6 +575,7 @@ public class SecondaryNameNode implements Runnable {
      * Merge image and edits, and verify consistency with the signature.
      */
     private void doMerge(CheckpointSignature sig) throws IOException {
+      LOG.info("wzt:doMerge:fsimage,editlog,editlog.new merge...");
       getEditLog().open();
       StorageDirectory sdName = null;
       StorageDirectory sdEdits = null;
@@ -585,12 +586,17 @@ public class SecondaryNameNode implements Runnable {
       it = dirIterator(NameNodeDirType.EDITS);
       if (it.hasNext())
         sdEdits = it.next();
-      if ((sdName == null) || (sdEdits == null))
-        throw new IOException("Could not locate checkpoint directories");
+      if ((sdName == null) || (sdEdits == null)){
+          throw new IOException("Could not locate checkpoint directories");    	  
+      }
+      LOG.info("wzt:doMerge:loadFSImage...");
       loadFSImage(FSImage.getImageFile(sdName, NameNodeFile.IMAGE));
+      LOG.info("wzt:doMerge:loadFSEdits...");
       loadFSEdits(sdEdits);
       sig.validateStorageInfo(this);
+      LOG.info("wzt:doMerge:merge done,and saveFSImage...");
       saveFSImage();
+      LOG.info("wzt:doMerge:saveFSImage   success");
     }
   }
 }

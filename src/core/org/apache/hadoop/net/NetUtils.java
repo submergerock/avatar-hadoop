@@ -441,4 +441,21 @@ public class NetUtils {
     }
     return hostNames;
   }
+  
+  public static InetSocketAddress resolveAddress(InetSocketAddress address) {
+	    String hostName = address.getHostName() + ":" + address.getPort();
+	    InetSocketAddress newAddr = createSocketAddr(hostName);
+	    if (newAddr.isUnresolved()) {
+	      LOG.warn("Address unresolvable: " + newAddr);
+	    } else if (!newAddr.equals(address)) {
+	      LOG.info("DNS changed from " + address + " to " + newAddr);
+	      return newAddr;
+	    } else {
+	      if (LOG.isDebugEnabled()) {
+	        LOG.debug("DNS Address unchanged: " + address);
+	      }
+	    }
+	    return null;
+	  }
+  
 }

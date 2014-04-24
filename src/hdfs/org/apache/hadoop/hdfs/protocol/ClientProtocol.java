@@ -24,7 +24,7 @@ import java.util.HashMap;
 
 import org.apache.hadoop.ipc.VersionedProtocol;
 import org.apache.hadoop.security.AccessControlException;
-import org.apache.hadoop.hdfs.job.Job;
+//import org.apache.hadoop.hdfs.job.Job;
 import org.apache.hadoop.hdfs.protocol.FSConstants.UpgradeAction;
 import org.apache.hadoop.hdfs.server.common.UpgradeStatusReport;
 import org.apache.hadoop.hdfs.server.namenode.DatanodeDescriptor;
