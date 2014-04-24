@@ -11,38 +11,41 @@
   <name>dfs.permissions</name>
   <value>false</value>
 </property>-->
-
+ 
 <property>
 	<name>dfs.name.dir.shared0</name>
-	<!--<value>/dinglicom/hadoop/tmp/avatarshare0/share0/namenode</value>-->
-        <value>/home/hadoop/nfs/avatar-hadoop/share0/namenode</value>
+	<value>/home/hadoop/avatar-hadoop/tmp/nfs/share0/namenode</value>
+        <!--<value>file://${hadoop.tmp.dir}/nfs/avatar-hadoop/share0/namenode</value>-->
 </property> 
 
 <property>
 	<name>dfs.name.edits.dir.shared0</name>
-	<!--<value>/dinglicom/hadoop/tmp/avatarshare0/share0/editlog</value>-->
-        <value>/home/hadoop/nfs/avatar-hadoop/share0/editlog</value>
+	<value>/home/hadoop/avatar-hadoop/tmp/nfs/share0/editlog</value>-->
+        <!--<value>file://${hadoop.tmp.dir}/nfs/avatar-hadoop/share0/editlog</value>-->
 </property>
  
 <property>
 	<name>dfs.http.address0</name>
-	<value>172.16.40.234:50070</value>
+	<value>0.0.0.0:50070</value>
 </property> 
 
 <property>
 	<name>dfs.name.dir.shared1</name>
-	<value>/home/hadoop/nfs/avatar-hadoop/share1/namenode</value>
+        <value>/home/hadoop/avatar-hadoop/tmp/nfs/share1/namenode</value>
+	<!--<value>file://${hadoop.tmp.dir}/nfs/avatar-hadoop/share1/namenode</value>-->
 </property> 
 
 <property>
 	<name>dfs.name.edits.dir.shared1</name>
-	<value>/home/hadoop/nfs/avatar-hadoop/share1/editlog</value>
+        <value>/home/hadoop/avatar-hadoop/tmp/nfs/share1/editlog</value>
+	<!--<value>file://${hadoop.tmp.dir}/nfs/avatar-hadoop/share1/editlog</value>-->
 </property> 
 
 <property>
 	<name>dfs.http.address1</name>
-	<value>172.16.4.102:50070</value>
+	<value>172.16.40.233:50070</value>
 </property> 
+
 <property>
   <name>dfs.block.size</name>
   <value>67108864</value>
@@ -53,39 +56,40 @@
 
 <property>
 	<name>dfs.http.address</name>
-	<value>172.16.40.234:50070</value>
+	<value>0.0.0.0:50070</value>
 </property> 
 
 <property>
 	<name>dfs.replication</name>
-	<value>2</value>
+	<value>1</value>
 </property>
 
 <property>
 	<name>dfs.replication.min</name>
-	<value>2</value>
+	<value>1</value>
 </property>
 
 <property>
 	<name>dfs.datanode.max.xcievers</name>
-	<value>128</value>
+	<value>4</value>
 </property>
 
 <property>
 	<name>dfs.name.dir</name>
-	<!--<value>/dinglicom/hadoop/tmp/local/namenode</value>-->
-        <value>/home/hadoop/hadoop-metadata/avatar-hadoop/namenode</value>
+	<value>/home/hadoop/avatar-hadoop/tmp/local/namenode</value>
+        <!--<value>file://${hadoop.tmp.dir}/dfs/name</value>-->
 </property>
 
 <property>
 	<name>dfs.name.edits.dir</name>
-	<!--<value>/dinglicom/hadoop/tmp/local/editlog</value>-->
-       <value>/home/hadoop/hadoop-metadata/avatar-hadoop/editlog</value>
+	<value>/home/hadoop/avatar-hadoop/tmp/local/editlog</value>
+       <!--<value>file://${hadoop.tmp.dir}/dfs/edit</value>-->
 </property> 
 
 <property>
 	<name>dfs.data.dir</name>
-	<value>/data00/avatar-hadoop-datadir,/data01/avatar-hadoop-datadir,/data02/avatar-hadoop-datadir</value>
+        <value>/home/hadoop/avatar-hadoop/tmp/dfs/data</value>
+	<!--<value>file://${hadoop.tmp.dir}/dfs/data</value>-->
 </property>
 
 <property>
@@ -111,13 +115,12 @@
 <property>
 	<name>dfs.namenode.handler.count</name>
 	<value>4</value>
-       <description>datanode rpc handler count</description>
 </property>
 
 <property>
   <name>hdfs.avatarnode.handler.count</name>
   <value>4</value>
-  <description>avatar rpc handler count</description>
+  <description>rpc handler count</description>
 </property>
 
 <property>
@@ -138,8 +141,7 @@
 
 <property>
   <name>dfs.datanode.du.reserved.percent</name>
-  <!--<value>0.01</value>-->
-  <value>10</value> 
+    <value>10</value>
       <description>Reserved space in bytes per volume. Always leave this much space free for non dfs use.
       </description>
 </property>
@@ -153,7 +155,7 @@
 
 <property>
   <name>dfs.safemode.threshold.pct</name>
-  <value>0.8</value>
+  <value>0.71</value>
   <description>
     Specifies the percentage of blocks that should satisfy 
     the minimal replication requirement defined by dfs.replication.min.
@@ -164,9 +166,9 @@
 
 <property>
   <name>heartbeat.recheck.interval</name>
-  <value>60000</value>
+  <value>900000</value>
   <description>
-     heartbeatRecheckInterval is how often namenode checks for expired datanodes
+     heartbeatRecheckInterval is how often namenode checks for expired datanodes 15*60*1000
   </description>
 </property>
 
@@ -183,14 +185,16 @@
   <name>dfs.replication.interval</name>
   <value>1</value> 
  </property>
- <property>
+
+<property>
  <name>dfs.max-repl-streams</name>
  <value>20</value>
-  </property>
-  <property>
+</property>
+
+<property>
   <name>dfs.replication.work.multiplier.per.iteration</name>
   <value>10</value> 
- </property>
+</property>
 
 <property>
   <name>dfs.datanode.gctime</name>
@@ -215,6 +219,13 @@
   <value>86400000</value>
   <description>Determines block reporting interval in milliseconds.</description>
 </property>
+
+<property>
+  <name>dfs.heartbeat.interval</name>
+    <value>9</value>
+    <description>Determines datanode heartbeat interval in seconds.</description>
+</property>
+
 
 </configuration>
 

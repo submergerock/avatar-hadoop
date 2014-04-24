@@ -27,14 +27,14 @@
 
 <property>
   <name>mapred.child.java.opts</name>
-  <value>-Xmx1000m</value>
+  <value></value>
 </property>
 
 <property>
   <name>mapred.child.ulimit</name>
-  <!--<value>524288000</value>-->
+  <value>524288000</value>
   <!--<value>4096000</value>-->
-  <value>2048000</value>
+  <!--<value>2048000</value>-->
   <description>The maximum virtual memory, in KB, of a process launched by the
   Map-Reduce framework. This can be used to control both the Mapper/Reducer
   tasks and applications using Hadoop Pipes, Hadoop Streaming etc.
